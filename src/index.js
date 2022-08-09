@@ -17,7 +17,10 @@ refs.inputEl.addEventListener('input', debounce(onSearch, DEBOUNCE_DELAY))
 
 function onSearch(e) {
     const countryName = e.target.value.trim();
-    if (countryName === '') return;
+    if (countryName === '') {
+        clearInnerHTML()
+        return
+    };
     fetchCountries(countryName)
         .then(response => response.json())
         .then(data => {

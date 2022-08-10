@@ -22,12 +22,7 @@ function onSearch(e) {
         return
     };
     fetchCountries(countryName)
-        .then(response => response.json())
         .then(data => {
-            if (data.status === 404) {
-                clearInnerHTML()
-                throw new Error(Notify.failure("Oops, there is no country with that name"));
-            };
             const items = data;
             clearInnerHTML()
             if (data.length > 10) {
@@ -39,7 +34,11 @@ function onSearch(e) {
                 createListItems(items);
             };
         })
-        .catch(error => error);
+        .catch(error => {
+            clearInnerHTML()
+            Notify.failure("Oops, there is no country with that name")
+            return error;
+        });
 }
 
 function createListItems(items) {
